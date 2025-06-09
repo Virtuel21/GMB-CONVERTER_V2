@@ -5,6 +5,7 @@ import { DataPreview } from './components/DataPreview';
 import { ConversionStatus } from './components/ConversionStatus';
 import { ExportButton } from './components/ExportButton';
 import { UpdateTab } from './components/UpdateTab';
+import { SeoTab } from './components/SeoTab';
 import { processExcelFile } from './utils/excelProcessor';
 import { convertToGMBFormat } from './utils/gmbConverter';
 import { MondialRelayData, GMBData, GlobalInputsType } from './types';
@@ -16,7 +17,7 @@ function App() {
     description: '',
     serviceType: 'Consigne automatique'
   });
-  const [activeTab, setActiveTab] = useState<'convert' | 'update'>('convert');
+  const [activeTab, setActiveTab] = useState<'convert' | 'update' | 'seo'>('convert');
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<'upload' | 'inputs' | 'preview' | 'export'>('upload');
 
@@ -84,6 +85,12 @@ function App() {
                 className={`px-3 py-2 rounded-lg ${activeTab === 'update' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
               >
                 Update
+              </button>
+              <button
+                onClick={() => setActiveTab('seo')}
+                className={`px-3 py-2 rounded-lg ${activeTab === 'seo' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+              >
+                Optimisation SEO
               </button>
               {activeTab === 'convert' && currentStep !== 'upload' && (
                 <button
@@ -166,6 +173,7 @@ function App() {
         )}
 
         {activeTab === 'update' && <UpdateTab />}
+        {activeTab === 'seo' && <SeoTab />}
       </main>
     </div>
   );
