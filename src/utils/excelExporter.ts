@@ -10,27 +10,46 @@ export const exportToGMBExcel = (data: GMBData[]): Promise<void> => {
       // Define the exact column order from the French GMB template
       const columnOrder = [
         'Code de magasin',
-        'Nom de l\'entreprise',
-        'Ligne d\'adresse 1',
-        'Ligne d\'adresse 2',
+        "Nom de l'entreprise",
+        "Ligne d'adresse\u00a01",
+        "Ligne d'adresse\u00a02",
+        "Ligne d'adresse\u00a03",
+        "Ligne d'adresse\u00a04",
+        "Ligne d'adresse\u00a05",
+        'Sous-localité',
         'Localité',
         'Région administrative',
-        'Code postal',
         'Pays/Région',
+        'Code postal',
         'Latitude',
         'Longitude',
+        'Numéro principal',
+        'Autres numéros de téléphone',
+        'Site Web',
         'Catégorie principale',
         'Catégories supplémentaires',
-        'Site Web',
-        'Téléphone',
-        'Description fournie par l\'établissement',
+        'Horaires le dimanche',
         'Horaires le lundi',
         'Horaires le mardi',
         'Horaires le mercredi',
         'Horaires le jeudi',
         'Horaires le vendredi',
         'Horaires le samedi',
-        'Horaires le dimanche'
+        "Horaires d'ouverture exceptionnels",
+        "Fournie par l'établissement",
+        'Date de création',
+        'Photo du logo',
+        'Photo de couverture',
+        'Autres photos',
+        'Libellés',
+        'Numéro de téléphone pour les extensions de lieu AdWords',
+        "Fournis par l'établissement: S'identifie comme géré par une femme (is_owned_by_women)",
+        'Paiements: Cartes de crédit (pay_credit_card_types_accepted): American Express (american_express)',
+        'Paiements: Cartes de crédit (pay_credit_card_types_accepted): MasterCard (mastercard)',
+        'Paiements: Cartes de crédit (pay_credit_card_types_accepted): VISA (visa)',
+        'Services: Wi-Fi (wi_fi)',
+        'URL des pages Google\u00a0Adresses: Lien du menu ou des services (url_menu)',
+        "URL des pages Google\u00a0Adresses: Liens pour commander à l'avance (url_order_ahead)"
       ];
       
       // Create header row
@@ -46,30 +65,7 @@ export const exportToGMBExcel = (data: GMBData[]): Promise<void> => {
       const ws = XLSX.utils.aoa_to_sheet(wsData);
       
       // Set column widths for better readability
-      const colWidths = [
-        { wch: 15 }, // Code de magasin
-        { wch: 30 }, // Nom de l'entreprise
-        { wch: 40 }, // Ligne d'adresse 1
-        { wch: 25 }, // Ligne d'adresse 2
-        { wch: 20 }, // Localité
-        { wch: 20 }, // Région administrative
-        { wch: 12 }, // Code postal
-        { wch: 15 }, // Pays/Région
-        { wch: 12 }, // Latitude
-        { wch: 12 }, // Longitude
-        { wch: 25 }, // Catégorie principale
-        { wch: 30 }, // Catégories supplémentaires
-        { wch: 30 }, // Site Web
-        { wch: 15 }, // Téléphone
-        { wch: 50 }, // Description fournie par l'établissement
-        { wch: 18 }, // Horaires le lundi
-        { wch: 18 }, // Horaires le mardi
-        { wch: 18 }, // Horaires le mercredi
-        { wch: 18 }, // Horaires le jeudi
-        { wch: 18 }, // Horaires le vendredi
-        { wch: 18 }, // Horaires le samedi
-        { wch: 18 }  // Horaires le dimanche
-      ];
+      const colWidths = columnOrder.map(() => ({ wch: 20 }));
       ws['!cols'] = colWidths;
       
       // Add worksheet to workbook

@@ -70,7 +70,7 @@ export const DataPreview: React.FC<DataPreviewProps> = ({ data }) => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm text-slate-900">
-                      {location['Ligne d\'adresse 1']}
+                      {location["Ligne d'adresse\u00a01"]}
                     </div>
                     <div className="text-sm text-slate-500">
                       {location['Localité']}, {location['Code postal']}
@@ -177,7 +177,7 @@ export const DataPreview: React.FC<DataPreviewProps> = ({ data }) => {
                 <div>
                   <h4 className="font-medium text-slate-900 mb-3">Adresse</h4>
                   <div className="text-sm space-y-1">
-                    <p>{selectedLocation['Ligne d\'adresse 1']}</p>
+                      <p>{selectedLocation["Ligne d'adresse\u00a01"]}</p>
                     <p>{selectedLocation['Localité']}, {selectedLocation['Code postal']}</p>
                     <p>{selectedLocation['Pays/Région']}</p>
                   </div>
@@ -216,10 +216,10 @@ export const DataPreview: React.FC<DataPreviewProps> = ({ data }) => {
                 </div>
 
                 {/* Description */}
-                {selectedLocation['Description fournie par l\'établissement'] && (
+                {selectedLocation["Fournie par l'établissement"] && (
                   <div>
                     <h4 className="font-medium text-slate-900 mb-3">Description</h4>
-                    <p className="text-sm text-slate-600">{selectedLocation['Description fournie par l\'établissement']}</p>
+                    <p className="text-sm text-slate-600">{selectedLocation["Fournie par l'établissement"]}</p>
                   </div>
                 )}
               </div>
