@@ -1,40 +1,40 @@
-import React, { useState, useCallback } from "react";
-import { FileUpload } from "./components/FileUpload";
-import { GlobalInputs } from "./components/GlobalInputs";
-import { DataPreview } from "./components/DataPreview";
-import { ConversionStatus } from "./components/ConversionStatus";
-import { ExportButton } from "./components/ExportButton";
-import { UpdateTab } from "./components/UpdateTab";
-import { SeoTab } from "./components/SeoTab";
-import { processExcelFile } from "./utils/excelProcessor";
-import { convertToGMBFormat } from "./utils/gmbConverter";
-import { MondialRelayData, GMBData, GlobalInputsType } from "./types";
+import React, { useState, useCallback } from 'react';
+import { FileUpload } from './components/FileUpload';
+import { GlobalInputs } from './components/GlobalInputs';
+import { DataPreview } from './components/DataPreview';
+import { ConversionStatus } from './components/ConversionStatus';
+import { ExportButton } from './components/ExportButton';
+import { UpdateTab } from './components/UpdateTab';
+import { SeoTab } from './components/SeoTab';
+import { processExcelFile } from './utils/excelProcessor';
+import { convertToGMBFormat } from './utils/gmbConverter';
+import { MondialRelayData, GMBData, GlobalInputsType } from './types';
 
 function App() {
   const [originalData, setOriginalData] = useState<MondialRelayData[]>([]);
   const [convertedData, setConvertedData] = useState<GMBData[]>([]);
   const [globalInputs, setGlobalInputs] = useState<GlobalInputsType>({
-    description: "",
-    serviceType: "Consigne automatique",
+    description: '',
+    serviceType: 'Consigne automatique',
   });
-  const [activeTab, setActiveTab] = useState<"convert" | "update" | "seo">(
-    "convert",
+  const [activeTab, setActiveTab] = useState<'convert' | 'update' | 'seo'>(
+    'convert',
   );
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<
-    "upload" | "inputs" | "preview" | "export"
-  >("upload");
+    'upload' | 'inputs' | 'preview' | 'export'
+  >('upload');
 
   const handleFileUpload = useCallback(async (file: File) => {
     setIsProcessing(true);
     try {
       const data = await processExcelFile(file);
       setOriginalData(data);
-      setCurrentStep("inputs");
+      setCurrentStep('inputs');
     } catch (error) {
-      console.error("Error processing file:", error);
+      console.error('Error processing file:', error);
       alert(
-        "Erreur lors du traitement du fichier. Veuillez vérifier le format et réessayer.",
+        'Erreur lors du traitement du fichier. Veuillez vérifier le format et réessayer.',
       );
     } finally {
       setIsProcessing(false);
@@ -46,11 +46,11 @@ function App() {
     try {
       const converted = convertToGMBFormat(originalData, globalInputs);
       setConvertedData(converted);
-      setCurrentStep("preview");
+      setCurrentStep('preview');
     } catch (error) {
-      console.error("Error converting data:", error);
+      console.error('Error converting data:', error);
       alert(
-        "Erreur lors de la conversion des données. Veuillez vérifier vos paramètres et réessayer.",
+        'Erreur lors de la conversion des données. Veuillez vérifier vos paramètres et réessayer.',
       );
     } finally {
       setIsProcessing(false);
@@ -60,10 +60,10 @@ function App() {
   const handleReset = () => {
     setOriginalData([]);
     setConvertedData([]);
-    setCurrentStep("upload");
+    setCurrentStep('upload');
     setGlobalInputs({
-      description: "",
-      serviceType: "Consigne automatique",
+      description: '',
+      serviceType: 'Consigne automatique',
     });
   };
 
