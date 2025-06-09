@@ -1,7 +1,10 @@
 import * as XLSX from 'xlsx';
 import { GMBData } from '../types';
 
-export const exportToGMBExcel = (data: GMBData[]): Promise<void> => {
+export const exportToGMBExcel = (
+  data: GMBData[],
+  filenamePrefix = 'Import_GMB'
+): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
       // Create a new workbook
@@ -73,7 +76,7 @@ export const exportToGMBExcel = (data: GMBData[]): Promise<void> => {
       
       // Generate filename with timestamp
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-      const filename = `Import_GMB_${timestamp}.xlsx`;
+      const filename = `${filenamePrefix}_${timestamp}.xlsx`;
       
       // Write and download the file
       XLSX.writeFile(wb, filename);
