@@ -35,33 +35,52 @@ export interface MondialRelayData {
   'Heure Fin 1ère Période Dimanche': string;
   'Heure Début 2ème Période Dimanche': string;
   'Heure Fin 2ème Période Dimanche': string;
-  [key: string]: any;
+  [key: string]: string | number | undefined;
 }
 
 // French GMB template structure - exact column names from the template
 export interface GMBData {
   'Code de magasin': string;
-  'Nom de l\'entreprise': string;
-  'Ligne d\'adresse 1': string;
-  'Ligne d\'adresse 2': string;
+  "Nom de l'entreprise": string;
+  "Ligne d'adresse\u00a01": string;
+  "Ligne d'adresse\u00a02": string;
+  "Ligne d'adresse\u00a03": string;
+  "Ligne d'adresse\u00a04": string;
+  "Ligne d'adresse\u00a05": string;
+  'Sous-localité': string;
   'Localité': string;
   'Région administrative': string;
-  'Code postal': string;
   'Pays/Région': string;
+  'Code postal': string;
   'Latitude': number;
   'Longitude': number;
+  'Numéro principal': string;
+  'Autres numéros de téléphone': string;
+  'Site Web': string;
   'Catégorie principale': string;
   'Catégories supplémentaires': string;
-  'Site Web': string;
-  'Téléphone': string;
-  'Description fournie par l\'établissement': string;
+  'Horaires le dimanche': string;
   'Horaires le lundi': string;
   'Horaires le mardi': string;
   'Horaires le mercredi': string;
   'Horaires le jeudi': string;
   'Horaires le vendredi': string;
   'Horaires le samedi': string;
-  'Horaires le dimanche': string;
+  "Horaires d'ouverture exceptionnels": string;
+  "Fournie par l'établissement": string;
+  'Date de création': string;
+  'Photo du logo': string;
+  'Photo de couverture': string;
+  'Autres photos': string;
+  'Libellés': string;
+  'Numéro de téléphone pour les extensions de lieu AdWords': string;
+  "Fournis par l'établissement: S'identifie comme géré par une femme (is_owned_by_women)": string;
+  'Paiements: Cartes de crédit (pay_credit_card_types_accepted): American Express (american_express)': string;
+  'Paiements: Cartes de crédit (pay_credit_card_types_accepted): MasterCard (mastercard)': string;
+  'Paiements: Cartes de crédit (pay_credit_card_types_accepted): VISA (visa)': string;
+  'Services: Wi-Fi (wi_fi)': string;
+  'URL des pages Google\u00a0Adresses: Lien du menu ou des services (url_menu)': string;
+  "URL des pages Google\u00a0Adresses: Liens pour commander à l'avance (url_order_ahead)": string;
 }
 
 export interface GlobalInputsType {
