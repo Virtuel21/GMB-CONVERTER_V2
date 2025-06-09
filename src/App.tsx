@@ -17,13 +17,9 @@ function App() {
     description: '',
     serviceType: 'Consigne automatique',
   });
-  const [activeTab, setActiveTab] = useState<'convert' | 'update' | 'seo'>(
-    'convert',
-  );
+  const [activeTab, setActiveTab] = useState<'convert' | 'update' | 'seo'>('convert');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [currentStep, setCurrentStep] = useState<
-    'upload' | 'inputs' | 'preview' | 'export'
-  >('upload');
+  const [currentStep, setCurrentStep] = useState<'upload' | 'inputs' | 'preview' | 'export'>('upload');
 
   const handleFileUpload = useCallback(async (file: File) => {
     setIsProcessing(true);
@@ -33,9 +29,7 @@ function App() {
       setCurrentStep('inputs');
     } catch (error) {
       console.error('Error processing file:', error);
-      alert(
-        'Erreur lors du traitement du fichier. Veuillez vérifier le format et réessayer.',
-      );
+      alert('Erreur lors du traitement du fichier. Veuillez vérifier le format et réessayer.');
     } finally {
       setIsProcessing(false);
     }
@@ -49,9 +43,7 @@ function App() {
       setCurrentStep('preview');
     } catch (error) {
       console.error('Error converting data:', error);
-      alert(
-        'Erreur lors de la conversion des données. Veuillez vérifier vos paramètres et réessayer.',
-      );
+      alert('Erreur lors de la conversion des données. Veuillez vérifier vos paramètres et réessayer.');
     } finally {
       setIsProcessing(false);
     }
@@ -78,30 +70,29 @@ function App() {
                 Convertisseur Mondial Relay → GMB
               </h1>
               <p className="text-slate-600 mt-1">
-                Convertissez les fichiers Excel Mondial Relay au format d'import
-                Google My Business
+                Convertissez les fichiers Excel Mondial Relay au format d'import Google My Business
               </p>
             </div>
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => setActiveTab("convert")}
-                className={`px-3 py-2 rounded-lg ${activeTab === "convert" ? "bg-blue-600 text-white" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}
+                onClick={() => setActiveTab('convert')}
+                className={`px-3 py-2 rounded-lg ${activeTab === 'convert' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
               >
                 Convertir
               </button>
               <button
-                onClick={() => setActiveTab("update")}
-                className={`px-3 py-2 rounded-lg ${activeTab === "update" ? "bg-blue-600 text-white" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}
+                onClick={() => setActiveTab('update')}
+                className={`px-3 py-2 rounded-lg ${activeTab === 'update' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
               >
                 Update
               </button>
               <button
-                onClick={() => setActiveTab("seo")}
-                className={`px-3 py-2 rounded-lg ${activeTab === "seo" ? "bg-blue-600 text-white" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}
+                onClick={() => setActiveTab('seo')}
+                className={`px-3 py-2 rounded-lg ${activeTab === 'seo' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
               >
                 Optimisation SEO
               </button>
-              {activeTab === "convert" && currentStep !== "upload" && (
+              {activeTab === 'convert' && currentStep !== 'upload' && (
                 <button
                   onClick={handleReset}
                   className="px-4 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
@@ -116,41 +107,36 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === "convert" && (
+        {activeTab === 'convert' && (
           <>
             {/* Progress Steps */}
             <ConversionStatus currentStep={currentStep} />
 
             <div className="mt-8 space-y-8">
               {/* Step 1: File Upload */}
-              {currentStep === "upload" && (
+              {currentStep === 'upload' && (
                 <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-semibold text-slate-900 mb-2">
                       Télécharger le fichier Excel Mondial Relay
                     </h2>
                     <p className="text-slate-600">
-                      Sélectionnez votre fichier Excel Mondial Relay pour
-                      commencer le processus de conversion
+                      Sélectionnez votre fichier Excel Mondial Relay pour commencer le processus de conversion
                     </p>
                   </div>
-                  <FileUpload
-                    onFileUpload={handleFileUpload}
-                    isProcessing={isProcessing}
-                  />
+                  <FileUpload onFileUpload={handleFileUpload} isProcessing={isProcessing} />
                 </div>
               )}
 
               {/* Step 2: Global Inputs */}
-              {currentStep === "inputs" && (
+              {currentStep === 'inputs' && (
                 <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-semibold text-slate-900 mb-2">
                       Configurer les paramètres globaux
                     </h2>
                     <p className="text-slate-600">
-                      Ces paramètres seront appliqués à tous les emplacements de
-                      votre fichier
+                      Ces paramètres seront appliqués à tous les emplacements de votre fichier
                     </p>
                   </div>
                   <GlobalInputs
@@ -164,7 +150,7 @@ function App() {
               )}
 
               {/* Step 3: Data Preview */}
-              {currentStep === "preview" && (
+              {currentStep === 'preview' && (
                 <div className="space-y-6">
                   <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                     <div className="flex items-center justify-between mb-6">
@@ -173,8 +159,7 @@ function App() {
                           Aperçu des données converties
                         </h2>
                         <p className="text-slate-600">
-                          Vérifiez les données converties avant l'export au
-                          format GMB
+                          Vérifiez les données converties avant l'export au format GMB
                         </p>
                       </div>
                       <ExportButton data={convertedData} />
@@ -187,8 +172,8 @@ function App() {
           </>
         )}
 
-        {activeTab === "update" && <UpdateTab />}
-        {activeTab === "seo" && <SeoTab />}
+        {activeTab === 'update' && <UpdateTab />}
+        {activeTab === 'seo' && <SeoTab />}
       </main>
     </div>
   );
