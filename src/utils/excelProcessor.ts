@@ -15,7 +15,7 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
         const worksheet = workbook.Sheets[worksheetName];
         
         // Convert to JSON
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        const jsonData: unknown[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
         
         if (jsonData.length < 2) {
           throw new Error('File appears to be empty or invalid');
@@ -42,12 +42,12 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
         
         // Convert rows to objects
         const processedData: MondialRelayData[] = [];
-        
+
         for (let i = 1; i < jsonData.length; i++) {
-          const row = jsonData[i] as any[];
+          const row = jsonData[i] as (string | number | undefined)[];
           if (row.length === 0) continue; // Skip empty rows
-          
-          const rowData: any = {};
+
+          const rowData: Record<string, string | number> = {};
           headers.forEach((header, index) => {
             rowData[header] = row[index] || '';
           });
