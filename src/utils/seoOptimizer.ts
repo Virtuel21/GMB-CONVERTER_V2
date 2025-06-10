@@ -37,6 +37,10 @@ export const optimizeSeo = (
   options: SeoOptions
 ): GMBData[] => {
   return data.map((item) => {
+    if (!options.template.trim()) {
+      return { ...item };
+    }
+
     let name = options.template;
 
     name = replaceToken(name, '{Ville}', item['Localité'] || '', options.includeCity);
