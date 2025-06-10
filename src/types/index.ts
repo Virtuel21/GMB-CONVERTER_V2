@@ -3,6 +3,9 @@ export interface MondialRelayData {
   'Intitulé TouchPoint': string;
   'Enseigne': string;
   'Adresse1': string;
+  'Adresse2': string;
+  'Adresse3': string;
+  'Adresse4': string;
   'Ville': string;
   'Code Postal': string;
   'Intitulé Département': string;
@@ -92,3 +95,4 @@ export interface GlobalInputsType {
 }
 
 export type ConversionStep = 'upload' | 'inputs' | 'preview' | 'export';
+

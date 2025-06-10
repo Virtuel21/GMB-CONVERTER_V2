@@ -136,15 +136,19 @@ export const convertToGMBFormat = (
       location['Heure fin 2ème période Dimanche'] || ''
     );
 
+    const addressLines = ['Adresse1', 'Adresse2', 'Adresse3', 'Adresse4']
+      .map(field => String(location[field] || '').trim())
+      .filter(line => line !== '');
+
     // Return data using exact French GMB column names
     return {
       'Code de magasin': location['Numéro TouchPoint'] || '',
       "Nom de l'entreprise": location['Enseigne'] || location['Intitulé TouchPoint'] || '',
-      "Ligne d'adresse\u00a01": location['Adresse1'] || '',
-      "Ligne d'adresse\u00a02": '',
-      "Ligne d'adresse\u00a03": '',
-      "Ligne d'adresse\u00a04": '',
-      "Ligne d'adresse\u00a05": '',
+      "Ligne d'adresse\u00a01": addressLines[0] || '',
+      "Ligne d'adresse\u00a02": addressLines[1] || '',
+      "Ligne d'adresse\u00a03": addressLines[2] || '',
+      "Ligne d'adresse\u00a04": addressLines[3] || '',
+      "Ligne d'adresse\u00a05": addressLines[4] || '',
       'Sous-localité': '',
       'Localité': location['Ville'] || '',
       'Région administrative': location['Intitulé Département'] || '',
