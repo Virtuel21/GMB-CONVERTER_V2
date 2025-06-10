@@ -52,15 +52,15 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
 
         for (let i = 1; i < jsonData.length; i++) {
           const row = jsonData[i] as (string | number | undefined)[];
-          if (row.length === 0) continue; // Skip empty rows
+          if (!row || row.every(cell => cell === undefined || cell === '')) continue; // Skip empty rows
 
           const rowData: Record<string, string | number> = {};
           headers.forEach((header, index) => {
-            rowData[header] = row[index] || '';
+            rowData[header] = row[index] ?? '';
           });
-          
-          // Ensure required fields have values
-          if (rowData['Numéro TouchPoint'] && rowData['Adresse1'] && rowData['Ville']) {
+
+          // Only require the TouchPoint id to consider the row valid
+          if (rowData['Numéro TouchPoint']) {
             processedData.push(rowData as MondialRelayData);
           }
         }
