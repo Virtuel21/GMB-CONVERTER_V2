@@ -3,6 +3,7 @@ import { GMBData } from '../types';
 import { readGMBExcel } from '../utils/gmbExcelReader';
 import { exportToGMBExcel } from '../utils/excelExporter';
 import { optimizeSeo, SeoOptions } from '../utils/seoOptimizer';
+import { removeAccentsFromData } from '../utils/diacritic';
 
 export const SeoTab: React.FC = () => {
   const [originalData, setOriginalData] = useState<GMBData[]>([]);
@@ -46,6 +47,11 @@ export const SeoTab: React.FC = () => {
 
   const handleExport = async () => {
     await exportToGMBExcel(optimizedData, 'gmb_seo_optimized');
+  };
+
+  const handleRemoveAccents = () => {
+    setOriginalData(prev => removeAccentsFromData(prev));
+    setOptimizedData(prev => removeAccentsFromData(prev));
   };
 
   return (
@@ -106,6 +112,13 @@ export const SeoTab: React.FC = () => {
             <span>Capitaliser la première lettre de chaque mot</span>
           </label>
         </div>
+        <button
+          onClick={handleRemoveAccents}
+          disabled={originalData.length === 0}
+          className="px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50"
+        >
+          Supprimer les accents du fichier
+        </button>
         <button
           onClick={handleOptimize}
           disabled={isProcessing || originalData.length === 0}
