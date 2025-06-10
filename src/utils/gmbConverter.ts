@@ -1,10 +1,21 @@
 import { MondialRelayData, GMBData, GlobalInputsType } from '../types';
 
-const formatTime = (time: string): string => {
-  if (!time || time === '00:00:00' || time === '00:00') return '';
-  
-  // Handle different time formats
-  const cleanTime = time.trim();
+const toTimeString = (value: string | number | undefined): string => {
+  if (value === undefined || value === null || value === '') return '';
+  if (typeof value === 'number') {
+    const totalMinutes = Math.round(value * 24 * 60);
+    const hours = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+    const minutes = (totalMinutes % 60).toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+  return String(value);
+};
+
+const formatTime = (time: string | number | undefined): string => {
+  const str = toTimeString(time);
+  if (!str || str === '00:00:00' || str === '00:00') return '';
+
+  const cleanTime = str.trim();
   
   // If it's already in HH:MM format, return as is
   if (/^\d{2}:\d{2}$/.test(cleanTime)) {
@@ -24,16 +35,22 @@ const formatTime = (time: string): string => {
   return '';
 };
 
-const isValidTime = (time: string): boolean => {
+const isValidTime = (time: string | number | undefined): boolean => {
   const formatted = formatTime(time);
   return formatted !== '' && formatted !== '00:00';
 };
 
+const convertStoreCode = (code: string | number | undefined): string => {
+  const str = String(code || '').trim();
+  if (!str) return '';
+  return str.replace(/^FR/i, 'MRL');
+};
+
 const convertDayOpeningHours = (
-  start1: string, 
-  end1: string, 
-  start2: string, 
-  end2: string
+  start1: string | number | undefined,
+  end1: string | number | undefined,
+  start2: string | number | undefined,
+  end2: string | number | undefined
 ): string => {
   const formattedStart1 = formatTime(start1);
   const formattedEnd1 = formatTime(end1);
@@ -70,69 +87,74 @@ const convertDayOpeningHours = (
 };
 
 export const convertToGMBFormat = (
-  mondialData: MondialRelayData[], 
+  mondialData: MondialRelayData[],
   globalInputs: GlobalInputsType
 ): GMBData[] => {
+  console.log('[gmbConverter] Converting', mondialData.length, 'rows');
   return mondialData.map((location) => {
     // Convert opening hours for each day using the new format
     const mondayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Lundi'] || '',
-      location['Heure Fin 1ère Période Lundi'] || '',
-      location['Heure Début 2ème Période Lundi'] || '',
-      location['Heure Fin 2ème Période Lundi'] || ''
+      location['Heure début 1ère période Lundi'] || '',
+      location['Heure fin 1ère période Lundi'] || '',
+      location['Heure début 2ème période Lundi'] || '',
+      location['Heure fin 2ème période Lundi'] || ''
     );
-    
+
     const tuesdayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Mardi'] || '',
-      location['Heure Fin 1ère Période Mardi'] || '',
-      location['Heure Début 2ème Période Mardi'] || '',
-      location['Heure Fin 2ème Période Mardi'] || ''
+      location['Heure début 1ère période Mardi'] || '',
+      location['Heure fin 1ère période Mardi'] || location['Heure fin 2ème période Mardi'] || '',
+      location['Heure début 2ème période Mardi'] || '',
+      location['Heure fin 2ème période Mardi'] || ''
     );
-    
+
     const wednesdayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Mercredi'] || '',
-      location['Heure Fin 1ère Période Mercredi'] || '',
-      location['Heure Début 2ème Période Mercredi'] || '',
-      location['Heure Fin 2ème Période Mercredi'] || ''
+      location['Heure début 1ère période Mercredi'] || '',
+      location['Heure fin 1ère période Mercredi'] || '',
+      location['Heure début 2ème période Mercredi'] || '',
+      location['Heure fin 2ème période Mercredi'] || ''
     );
-    
+
     const thursdayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Jeudi'] || '',
-      location['Heure Fin 1ère Période Jeudi'] || '',
-      location['Heure Début 2ème Période Jeudi'] || '',
-      location['Heure Fin 2ème Période Jeudi'] || ''
+      location['Heure début 1ère période Jeudi'] || '',
+      location['Heure fin 1ère période Jeudi'] || '',
+      location['Heure début 2ème période Jeudi'] || '',
+      location['Heure fin 2ème période Jeudi'] || ''
     );
-    
+
     const fridayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Vendredi'] || '',
-      location['Heure Fin 1ère Période Vendredi'] || '',
-      location['Heure Début 2ème Période Vendredi'] || '',
-      location['Heure Fin 2ème Période Vendredi'] || ''
+      location['Heure début 1ère période Vendredi'] || '',
+      location['Heure fin 1ère période Vendredi'] || '',
+      location['Heure début 2ème période Vendredi'] || '',
+      location['Heure fin 2ème période Vendredi'] || ''
     );
-    
+
     const saturdayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Samedi'] || '',
-      location['Heure Fin 1ère Période Samedi'] || '',
-      location['Heure Début 2ème Période Samedi'] || '',
-      location['Heure Fin 2ème Période Samedi'] || ''
+      location['Heure début 1ère période Samedi'] || '',
+      location['Heure fin 1ère période Samedi'] || '',
+      location['Heure début 2ème période Samedi'] || '',
+      location['Heure fin 2ème période Samedi'] || ''
     );
-    
+
     const sundayHours = convertDayOpeningHours(
-      location['Heure Début 1ère Période Dimanche'] || '',
-      location['Heure Fin 1ère Période Dimanche'] || '',
-      location['Heure Début 2ème Période Dimanche'] || '',
-      location['Heure Fin 2ème Période Dimanche'] || ''
+      location['Heure début 1ère période Dimanche'] || '',
+      location['Heure fin 1ère période Dimanche'] || '',
+      location['Heure début 2ème période Dimanche'] || '',
+      location['Heure fin 2ème période Dimanche'] || ''
     );
+
+    const addressLines = ['Adresse1', 'Adresse2', 'Adresse3', 'Adresse4']
+      .map(field => String(location[field] || '').trim())
+      .filter(line => line !== '');
 
     // Return data using exact French GMB column names
     return {
-      'Code de magasin': location['Numéro TouchPoint'] || '',
-      "Nom de l'entreprise": location['Intitulé TouchPoint'] || '',
-      "Ligne d'adresse\u00a01": location['Adresse1'] || '',
-      "Ligne d'adresse\u00a02": '',
-      "Ligne d'adresse\u00a03": '',
-      "Ligne d'adresse\u00a04": '',
-      "Ligne d'adresse\u00a05": '',
+      'Code de magasin': convertStoreCode(location['Numéro TouchPoint']),
+      "Nom de l'entreprise": location['Enseigne'] || location['Intitulé TouchPoint'] || '',
+      "Ligne d'adresse\u00a01": addressLines[0] || '',
+      "Ligne d'adresse\u00a02": addressLines[1] || '',
+      "Ligne d'adresse\u00a03": addressLines[2] || '',
+      "Ligne d'adresse\u00a04": addressLines[3] || '',
+      "Ligne d'adresse\u00a05": addressLines[4] || '',
       'Sous-localité': '',
       'Localité': location['Ville'] || '',
       'Région administrative': location['Intitulé Département'] || '',

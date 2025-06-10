@@ -1,7 +1,11 @@
 export interface MondialRelayData {
   'Numéro TouchPoint': string;
   'Intitulé TouchPoint': string;
+  'Enseigne': string;
   'Adresse1': string;
+  'Adresse2': string;
+  'Adresse3': string;
+  'Adresse4': string;
   'Ville': string;
   'Code Postal': string;
   'Intitulé Département': string;
@@ -9,34 +13,34 @@ export interface MondialRelayData {
   'Longitude': number;
   'Téléphone': string;
   // Opening hours fields for each day with start/end times for 1st and 2nd periods
-  'Heure Début 1ère Période Lundi': string;
-  'Heure Fin 1ère Période Lundi': string;
-  'Heure Début 2ème Période Lundi': string;
-  'Heure Fin 2ème Période Lundi': string;
-  'Heure Début 1ère Période Mardi': string;
-  'Heure Fin 1ère Période Mardi': string;
-  'Heure Début 2ème Période Mardi': string;
-  'Heure Fin 2ème Période Mardi': string;
-  'Heure Début 1ère Période Mercredi': string;
-  'Heure Fin 1ère Période Mercredi': string;
-  'Heure Début 2ème Période Mercredi': string;
-  'Heure Fin 2ème Période Mercredi': string;
-  'Heure Début 1ère Période Jeudi': string;
-  'Heure Fin 1ère Période Jeudi': string;
-  'Heure Début 2ème Période Jeudi': string;
-  'Heure Fin 2ème Période Jeudi': string;
-  'Heure Début 1ère Période Vendredi': string;
-  'Heure Fin 1ère Période Vendredi': string;
-  'Heure Début 2ème Période Vendredi': string;
-  'Heure Fin 2ème Période Vendredi': string;
-  'Heure Début 1ère Période Samedi': string;
-  'Heure Fin 1ère Période Samedi': string;
-  'Heure Début 2ème Période Samedi': string;
-  'Heure Fin 2ème Période Samedi': string;
-  'Heure Début 1ère Période Dimanche': string;
-  'Heure Fin 1ère Période Dimanche': string;
-  'Heure Début 2ème Période Dimanche': string;
-  'Heure Fin 2ème Période Dimanche': string;
+  'Heure début 1ère période Lundi': string;
+  'Heure fin 1ère période Lundi': string;
+  'Heure début 2ème période Lundi': string;
+  'Heure fin 2ème période Lundi': string;
+  'Heure début 1ère période Mardi': string;
+  'Heure fin 2ème période Mardi': string; // mislabelled in source but used for end1
+  'Heure début 2ème période Mardi': string;
+  'Heure fin 2ème période Mardi': string;
+  'Heure début 1ère période Mercredi': string;
+  'Heure fin 1ère période Mercredi': string;
+  'Heure début 2ème période Mercredi': string;
+  'Heure fin 2ème période Mercredi': string;
+  'Heure début 1ère période Jeudi': string;
+  'Heure fin 1ère période Jeudi': string;
+  'Heure début 2ème période Jeudi': string;
+  'Heure fin 2ème période Jeudi': string;
+  'Heure début 1ère période Vendredi': string;
+  'Heure fin 1ère période Vendredi': string;
+  'Heure début 2ème période Vendredi': string;
+  'Heure fin 2ème période Vendredi': string;
+  'Heure début 1ère période Samedi': string;
+  'Heure fin 1ère période Samedi': string;
+  'Heure début 2ème période Samedi': string;
+  'Heure fin 2ème période Samedi': string;
+  'Heure début 1ère période Dimanche': string;
+  'Heure fin 1ère période Dimanche': string;
+  'Heure début 2ème période Dimanche': string;
+  'Heure fin 2ème période Dimanche': string;
   [key: string]: string | number | undefined;
 }
 
@@ -91,3 +95,4 @@ export interface GlobalInputsType {
 }
 
 export type ConversionStep = 'upload' | 'inputs' | 'preview' | 'export';
+
