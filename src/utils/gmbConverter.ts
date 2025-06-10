@@ -17,6 +17,12 @@ const formatTime = (time: string | number | undefined): string => {
 
   const cleanTime = str.trim();
 
+const convertStoreCode = (code: string | number | undefined): string => {
+  const str = String(code || '').trim();
+  if (!str) return '';
+  return str.replace(/^FR/i, 'MRL');
+};
+
   if (/^\d{2}:\d{2}$/.test(cleanTime)) {
     return cleanTime;
   }
@@ -132,7 +138,7 @@ export const convertToGMBFormat = (
       .filter(line => line !== '');
 
     return {
-      'Code de magasin': location['Numéro TouchPoint'] || '',
+      'Code de magasin': convertStoreCode(location['Numéro TouchPoint']),
       "Nom de l'entreprise": location['Enseigne'] || location['Intitulé TouchPoint'] || '',
       "Ligne d'adresse 1": addressLines[0] || '',
       "Ligne d'adresse 2": addressLines[1] || '',
