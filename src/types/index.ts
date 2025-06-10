@@ -1,11 +1,13 @@
 export interface MondialRelayData {
-  'Numéro Relais': string;
+  'Numéro TouchPoint': string;
+  'Intitulé TouchPoint': string;
   'Adresse1': string;
   'Ville': string;
   'Code Postal': string;
+  'Intitulé Département': string;
   'Latitude': number;
   'Longitude': number;
-  'Enseigne': string;
+  'Téléphone': string;
   // Opening hours fields for each day with start/end times for 1st and 2nd periods
   'Heure Début 1ère Période Lundi': string;
   'Heure Fin 1ère Période Lundi': string;

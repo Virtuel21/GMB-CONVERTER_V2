@@ -50,8 +50,8 @@ export const SeoTab: React.FC = () => {
   };
 
   const handleRemoveAccents = () => {
-    setOriginalData(prev => removeAccentsFromData(prev));
-    setOptimizedData(prev => removeAccentsFromData(prev));
+    setOriginalData(prev => removeAccentsFromData(prev as any) as unknown as GMBData[]);
+    setOptimizedData(prev => removeAccentsFromData(prev as any) as unknown as GMBData[]);
   };
 
   return (

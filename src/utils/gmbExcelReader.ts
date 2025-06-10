@@ -28,7 +28,7 @@ export const readGMBExcel = (file: File): Promise<GMBData[]> => {
             rowData[h] = row[idx] || '';
           });
           if (rowData['Code de magasin']) {
-            processed.push(rowData as GMBData);
+            processed.push(rowData as unknown as GMBData);
           }
         }
 
