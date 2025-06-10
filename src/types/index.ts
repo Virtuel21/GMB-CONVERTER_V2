@@ -1,6 +1,7 @@
 export interface MondialRelayData {
   'Numéro TouchPoint': string;
   'Intitulé TouchPoint': string;
+  'Enseigne': string;
   'Adresse1': string;
   'Ville': string;
   'Code Postal': string;

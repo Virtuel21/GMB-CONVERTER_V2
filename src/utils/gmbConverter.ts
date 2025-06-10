@@ -127,7 +127,7 @@ export const convertToGMBFormat = (
     // Return data using exact French GMB column names
     return {
       'Code de magasin': location['Numéro TouchPoint'] || '',
-      "Nom de l'entreprise": location['Intitulé TouchPoint'] || '',
+      "Nom de l'entreprise": location['Enseigne'] || location['Intitulé TouchPoint'] || '',
       "Ligne d'adresse\u00a01": location['Adresse1'] || '',
       "Ligne d'adresse\u00a02": '',
       "Ligne d'adresse\u00a03": '',
