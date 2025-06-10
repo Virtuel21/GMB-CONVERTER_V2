@@ -16,7 +16,8 @@ const formatTime = (time: string | number | undefined): string => {
   if (!str || str === '00:00:00' || str === '00:00') return '';
 
   const cleanTime = str.trim();
-
+  
+  // If it's already in HH:MM format, return as is
   if (/^\d{2}:\d{2}$/.test(cleanTime)) {
     return cleanTime;
   }
@@ -35,6 +36,12 @@ const formatTime = (time: string | number | undefined): string => {
 const isValidTime = (time: string | number | undefined): boolean => {
   const formatted = formatTime(time);
   return formatted !== '' && formatted !== '00:00';
+};
+
+const convertStoreCode = (code: string | number | undefined): string => {
+  const str = String(code || '').trim();
+  if (!str) return '';
+  return str.replace(/^FR/i, 'MRL');
 };
 
 const convertDayOpeningHours = (
@@ -131,14 +138,15 @@ export const convertToGMBFormat = (
       .map(field => String(location[field] || '').trim())
       .filter(line => line !== '');
 
+    // Return data using exact French GMB column names
     return {
-      'Code de magasin': location['Numéro TouchPoint'] || '',
+      'Code de magasin': convertStoreCode(location['Numéro TouchPoint']),
       "Nom de l'entreprise": location['Enseigne'] || location['Intitulé TouchPoint'] || '',
-      "Ligne d'adresse 1": addressLines[0] || '',
-      "Ligne d'adresse 2": addressLines[1] || '',
-      "Ligne d'adresse 3": addressLines[2] || '',
-      "Ligne d'adresse 4": addressLines[3] || '',
-      "Ligne d'adresse 5": addressLines[4] || '',
+      "Ligne d'adresse\u00a01": addressLines[0] || '',
+      "Ligne d'adresse\u00a02": addressLines[1] || '',
+      "Ligne d'adresse\u00a03": addressLines[2] || '',
+      "Ligne d'adresse\u00a04": addressLines[3] || '',
+      "Ligne d'adresse\u00a05": addressLines[4] || '',
       'Sous-localité': '',
       'Localité': location['Ville'] || '',
       'Région administrative': location['Intitulé Département'] || '',
@@ -171,8 +179,8 @@ export const convertToGMBFormat = (
       'Paiements: Cartes de crédit (pay_credit_card_types_accepted): MasterCard (mastercard)': '',
       'Paiements: Cartes de crédit (pay_credit_card_types_accepted): VISA (visa)': '',
       'Services: Wi-Fi (wi_fi)': '',
-      'URL des pages Google Adresses: Lien du menu ou des services (url_menu)': '',
-      "URL des pages Google Adresses: Liens pour commander à l'avance (url_order_ahead)": ''
+      'URL des pages Google Adresses: Lien du menu ou des services (url_menu)': '',
+      "URL des pages Google Adresses: Liens pour commander à l'avance (url_order_ahead)": ''
     };
   });
 };
