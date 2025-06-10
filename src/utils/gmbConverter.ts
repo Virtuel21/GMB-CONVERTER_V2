@@ -21,17 +21,15 @@ const formatTime = (time: string | number | undefined): string => {
   if (/^\d{2}:\d{2}$/.test(cleanTime)) {
     return cleanTime;
   }
-  
-  // If it's in HH:MM:SS format, remove seconds
+
   if (/^\d{2}:\d{2}:\d{2}$/.test(cleanTime)) {
     return cleanTime.substring(0, 5);
   }
-  
-  // If it's in H:MM or H:MM:SS format, add leading zero
+
   if (/^\d:\d{2}(:\d{2})?$/.test(cleanTime)) {
     return '0' + cleanTime.substring(0, cleanTime.indexOf(':') + 3);
   }
-  
+
   return '';
 };
 
@@ -56,33 +54,28 @@ const convertDayOpeningHours = (
   const formattedEnd1 = formatTime(end1);
   const formattedStart2 = formatTime(start2);
   const formattedEnd2 = formatTime(end2);
-  
+
   const period1Valid = isValidTime(start1) && isValidTime(end1);
   const period2Valid = isValidTime(start2) && isValidTime(end2);
-  
-  // Check for full day (00:00 to 24:00 or 00:00 to 00:00 next day)
+
   if ((formattedStart1 === '00:00' && formattedEnd1 === '24:00') ||
       (formattedStart1 === '00:00' && formattedEnd2 === '24:00') ||
       (formattedStart2 === '00:00' && formattedEnd2 === '24:00')) {
     return '00:00-24:00';
   }
-  
-  // If both periods are valid
+
   if (period1Valid && period2Valid) {
     return `${formattedStart1}-${formattedEnd1},${formattedStart2}-${formattedEnd2}`;
   }
-  
-  // If only first period is valid
+
   if (period1Valid && !period2Valid) {
     return `${formattedStart1}-${formattedEnd1}`;
   }
-  
-  // If only second period is valid
+
   if (!period1Valid && period2Valid) {
     return `${formattedStart2}-${formattedEnd2}`;
   }
-  
-  // If no valid periods, return empty (closed)
+
   return '';
 };
 
@@ -92,7 +85,6 @@ export const convertToGMBFormat = (
 ): GMBData[] => {
   console.log('[gmbConverter] Converting', mondialData.length, 'rows');
   return mondialData.map((location) => {
-    // Convert opening hours for each day using the new format
     const mondayHours = convertDayOpeningHours(
       location['Heure début 1ère période Lundi'] || '',
       location['Heure fin 1ère période Lundi'] || '',
@@ -187,8 +179,8 @@ export const convertToGMBFormat = (
       'Paiements: Cartes de crédit (pay_credit_card_types_accepted): MasterCard (mastercard)': '',
       'Paiements: Cartes de crédit (pay_credit_card_types_accepted): VISA (visa)': '',
       'Services: Wi-Fi (wi_fi)': '',
-      'URL des pages Google\u00a0Adresses: Lien du menu ou des services (url_menu)': '',
-      "URL des pages Google\u00a0Adresses: Liens pour commander à l'avance (url_order_ahead)": ''
+      'URL des pages Google Adresses: Lien du menu ou des services (url_menu)': '',
+      "URL des pages Google Adresses: Liens pour commander à l'avance (url_order_ahead)": ''
     };
   });
 };
