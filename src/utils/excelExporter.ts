@@ -56,7 +56,7 @@ export const exportToGMBExcel = (
       ];
       
       // Create header row
-      const wsData = [columnOrder];
+      const wsData: (string | number)[][] = [columnOrder];
       
       // Add data rows in the correct order
       data.forEach(location => {

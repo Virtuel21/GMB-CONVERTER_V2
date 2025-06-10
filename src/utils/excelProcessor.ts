@@ -26,13 +26,15 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
         
         // Validate required columns
         const requiredColumns = [
-          'Numéro Relais',
-          'Adresse1', 
+          'Numéro TouchPoint',
+          'Intitulé TouchPoint',
+          'Adresse1',
           'Ville',
           'Code Postal',
+          'Intitulé Département',
           'Latitude',
           'Longitude',
-          'Enseigne'
+          'Téléphone'
         ];
         
         const missingColumns = requiredColumns.filter(col => !headers.includes(col));
@@ -53,7 +55,7 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
           });
           
           // Ensure required fields have values
-          if (rowData['Numéro Relais'] && rowData['Adresse1'] && rowData['Ville']) {
+          if (rowData['Numéro TouchPoint'] && rowData['Adresse1'] && rowData['Ville']) {
             processedData.push(rowData as MondialRelayData);
           }
         }

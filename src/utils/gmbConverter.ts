@@ -126,8 +126,8 @@ export const convertToGMBFormat = (
 
     // Return data using exact French GMB column names
     return {
-      'Code de magasin': location['Numéro Relais'] || '',
-      "Nom de l'entreprise": location['Enseigne'] || '',
+      'Code de magasin': location['Numéro TouchPoint'] || '',
+      "Nom de l'entreprise": location['Intitulé TouchPoint'] || '',
       "Ligne d'adresse\u00a01": location['Adresse1'] || '',
       "Ligne d'adresse\u00a02": '',
       "Ligne d'adresse\u00a03": '',
@@ -135,12 +135,12 @@ export const convertToGMBFormat = (
       "Ligne d'adresse\u00a05": '',
       'Sous-localité': '',
       'Localité': location['Ville'] || '',
-      'Région administrative': '',
+      'Région administrative': location['Intitulé Département'] || '',
       'Pays/Région': 'France',
       'Code postal': location['Code Postal'] || '',
-      'Latitude': parseFloat(location['Latitude']) || 0,
-      'Longitude': parseFloat(location['Longitude']) || 0,
-      'Numéro principal': '',
+      'Latitude': parseFloat(String(location['Latitude'])) || 0,
+      'Longitude': parseFloat(String(location['Longitude'])) || 0,
+      'Numéro principal': location['Téléphone'] || '',
       'Autres numéros de téléphone': '',
       'Site Web': '',
       'Catégorie principale': globalInputs.serviceType,
