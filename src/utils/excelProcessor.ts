@@ -27,7 +27,7 @@ export const processExcelFile = (file: File): Promise<MondialRelayData[]> => {
         // Validate required columns
         const requiredColumns = [
           'Numéro TouchPoint',
-          'Intitulé TouchPoint',
+          'Enseigne',
           'Adresse1',
           'Ville',
           'Code Postal',
